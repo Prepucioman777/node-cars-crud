@@ -1,0 +1,112 @@
+/* ========================================================
+   CARS - PIXAR RACING THEME STYLESHEET
+   Bandera a Cuadros, Asfalto, Neón y Telemetría
+   ======================================================== */
+
+/* Franja con patrón de bandera de carreras a cuadros */
+.checkered-banner {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #111111 25%, transparent 25%), 
+    linear-gradient(-45deg, #111111 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #111111 75%), 
+    linear-gradient(-45deg, transparent 75%, #111111 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+}
+
+/* Fondo decorativo con líneas de carretera */
+.road-perspective {
+  background: 
+    linear-gradient(180deg, transparent 0%, rgba(255, 204, 0, 0.05) 100%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 90px,
+      rgba(255, 204, 0, 0.08) 90px,
+      rgba(255, 204, 0, 0.08) 94px
+    );
+}
+
+/* Tarjetas de Ficha Técnica de Bólidos */
+.car-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.car-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.7);
+}
+
+.car-card-mcqueen:hover {
+  border-color: #E60012;
+  box-shadow: 0 0 25px rgba(230, 0, 18, 0.4);
+}
+
+.car-card-dinoco:hover {
+  border-color: #00A3E0;
+  box-shadow: 0 0 25px rgba(0, 163, 224, 0.4);
+}
+
+.car-card-hudson:hover {
+  border-color: #6366F1;
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+}
+
+.car-card-mater:hover {
+  border-color: #D97706;
+  box-shadow: 0 0 25px rgba(217, 119, 6, 0.4);
+}
+
+/* Modales activos */
+.modal-active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.modal-active > div {
+  transform: translateY(0) !important;
+}
+
+/* Animación de tacómetro */
+@keyframes revShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+.engine-revving {
+  animation: revShake 0.08s infinite alternate;
+}
+
+/* Toasts flotantes */
+.toast-msg {
+  pointer-events: auto;
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0;
+}
+
+.toast-msg.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Scrollbar personalizado estilo Pits */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E60012;
+}

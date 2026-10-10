@@ -1,0 +1,26 @@
+# docker-compose.yml
+# Despliegue de la aplicación web CRUD NestJS conectada a Oracle Database
+
+services:
+  web-crud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: web-cars-crud:6.7
+    container_name: web-cars-crud
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=oracle-db
+      - DB_PORT=1521
+      - DB_SERVICE_NAME=FREEPDB1
+      - DB_USER=SYS
+      - DB_PASSWORD=MyPass123
+    networks:
+      - soc-net
+    restart: unless-stopped
+
+networks:
+  soc-net:
+    external: true
