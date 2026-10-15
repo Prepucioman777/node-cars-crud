@@ -110,3 +110,36 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #E60012;
 }
+
+/* ========================================================
+   CARRUSEL DE CIRCUITOS Y POSTALES DE LA RUTA 66
+   ======================================================== */
+.circuit-carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.circuit-carousel-track.is-dragging {
+  transition: none !important;
+}
+
+.circuit-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background-color: #374151;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.circuit-dot:hover {
+  background-color: #9CA3AF;
+  transform: scale(1.15);
+}
+
+.circuit-dot.active {
+  width: 2rem;
+  background-color: #FFCC00;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.75);
+}

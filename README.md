@@ -40,8 +40,9 @@ Aplicación Web CRUD inspirada en la película **Cars (Pixar)**, el legendario c
     - **El Rey #43** (Dinoco - Strip Weathers).
     - **Chick Hicks #86** (Copa Pistón).
   - Selector de vista: **Vista Cuadrícula de Tarjetas** vs **Vista Tabla de Pistas**.
-- **Postales de la Ruta 66**:
-  - Galería con efectos de zoom y movimiento: Radiator Springs, Circuito Dinoco 400 y Willy's Butte (la curva de tierra de Doc Hudson).
+- **Carrusel Interactivo de Circuitos & Postales de la Ruta 66**:
+  - Carrusel dinámico responsive con auto-play, controles de reproducción/pausa, flechas de navegación, soporte táctil (swipe), navegación por teclado y dots indicadores.
+  - Incluye 6 escenarios legendarios con telemetría y citas célebres: *Radiator Springs*, *Super Speedway (Dinoco 400)*, *Willy's Butte (Curva de Doc)*, *L.A. International Speedway*, *Circuito Urbano de Tokio (WGP)* y *Thomasville Speedway (Smokey)*.
 - **Footer Retro Ruta 66**:
   - Emblema vintage de la Ruta 66 y créditos.
 

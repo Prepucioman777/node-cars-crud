@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Ka-Chow! Garaje de Radiator Springs & Copa Pistón | Cars CRUD</title>
+  <title>¡ku-chau! Garaje de Radiator Springs & Copa Pistón | Cars CRUD</title>
   
   <!-- Google Fonts: Russo One & Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,9 +97,9 @@
         <span>🏁</span> Radiator Springs, Condado Carburador • Milla 66
       </div>
 
-      <!-- Título Impactante Ka-Chow! -->
+      <!-- Título Impactante ku-chau! -->
       <h1 class="font-racing text-4xl sm:text-6xl md:text-7xl tracking-wide uppercase italic text-transparent bg-clip-text bg-gradient-to-r from-white via-highway-yellow to-racing-red drop-shadow-md">
-        ¡Ka-Chow!
+        ¡Ku-Chau!
       </h1>
       <p class="font-racing text-xl sm:text-2xl md:text-3xl text-gray-200 mt-2 uppercase tracking-wider">
         Bienvenido al acelerador total
@@ -290,62 +290,304 @@
 
   </main>
 
-  <!-- SECCIÓN DE PISTA Y PAISAJES (Ruta 66 & Radiator Springs) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800">
-    <div class="text-center mb-10">
-      <h2 class="font-racing text-3xl uppercase tracking-wider text-white">
-        🏁 Circuitos & Postales de la Ruta 66
-      </h2>
-      <p class="text-gray-400 text-sm mt-1">Explora los escenarios más emblemáticos de la saga</p>
+  <!-- SECCIÓN DE CARRUSEL: PISTA Y PAISAJES (Ruta 66 & Radiator Springs) -->
+  <section id="circuitos-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 relative">
+    
+    <!-- Encabezado con título, badge y controles del carrusel -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-asphalt-dark border border-highway-yellow/30 text-highway-yellow text-xs font-racing uppercase tracking-wider mb-2">
+          <span>🏁</span> Carrusel de Escenarios Legendarios
+        </div>
+        <h2 class="font-racing text-3xl uppercase tracking-wider text-white">
+          Circuitos & Postales de la Ruta 66
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">
+          Desliza para explorar las pistas, curvas de tierra y paisajes más emblemáticos de la saga Cars
+        </p>
+      </div>
+
+      <!-- Controles del carrusel (Contador, Auto-play y Flechas) -->
+      <div class="flex items-center gap-2.5 self-start md:self-auto">
+        <!-- Indicador numérico de posición -->
+        <span id="circuitCarouselCounter" class="text-xs font-racing text-highway-yellow bg-asphalt-dark border border-gray-800 px-3 py-2 rounded-xl font-mono shadow-inner">
+          01 / 06
+        </span>
+
+        <!-- Botón Reproducir / Pausar Auto-play -->
+        <button id="btnCircuitPlayPause" type="button" aria-label="Pausar o reanudar rotación automática" class="p-2.5 rounded-xl bg-asphalt border border-gray-800 hover:border-highway-yellow text-gray-300 hover:text-highway-yellow transition-all duration-200">
+          <svg id="circuitPauseIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <svg id="circuitPlayIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </button>
+
+        <!-- Botón Anterior -->
+        <button id="btnCircuitPrev" type="button" aria-label="Postal anterior" class="p-2.5 rounded-xl bg-asphalt border border-gray-800 hover:border-highway-yellow text-gray-300 hover:text-highway-yellow hover:scale-105 active:scale-95 transition-all duration-200 shadow-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <!-- Botón Siguiente -->
+        <button id="btnCircuitNext" type="button" aria-label="Siguiente postal" class="p-2.5 rounded-xl bg-asphalt border border-gray-800 hover:border-racing-red text-gray-300 hover:text-racing-red hover:scale-105 active:scale-95 transition-all duration-200 shadow-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Viewport del Carrusel -->
+    <div id="circuitCarouselContainer" class="relative overflow-hidden rounded-2xl group/carousel">
       
-      <!-- Card 1: Radiator Springs -->
-      <div class="group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-highway-yellow transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-amber-700 via-yellow-900 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
-          <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #ea580c 10%, #7c2d12 70%);"></div>
-          <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🌵</span>
-          <div class="absolute top-3 left-3 bg-asphalt/80 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-highway-yellow uppercase border border-highway-yellow/30">Ruta 66 Histórica</div>
+      <!-- Carrusel Track -->
+      <div id="circuitCarouselTrack" class="circuit-carousel-track cursor-grab active:cursor-grabbing select-none" style="transform: translateX(0%);">
+        
+        <!-- Slide 1: Radiator Springs -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-highway-yellow transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-amber-700 via-yellow-900 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #ea580c 10%, #7c2d12 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🌵</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-highway-yellow uppercase border border-highway-yellow/30">
+                  Ruta 66 Histórica
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  Milla 66
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-highway-yellow transition-colors flex items-center justify-between">
+                  <span>Radiator Springs</span>
+                  <span class="text-xs text-highway-yellow font-normal">Condado Carburador</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  Un oasis del desierto detenido en el tiempo. Hogar del Motel Rueda Rueda de Sally, el taller de pintura custom de Ramone y el café V8 de Flo.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">⛽ Café V8 de Flo</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🛞 Casa Della Tires</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-highway-yellow/90 italic">
+                “En Radiator Springs el reloj se detiene y la carretera se disfruta con el alma.”
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="p-5">
-          <h3 class="font-racing text-lg text-white group-hover:text-highway-yellow transition-colors">Radiator Springs</h3>
-          <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-            Un oasis en el desierto con el Motel Rueda Rueda de Sally, el taller de pintura de Ramone y el café de Flo.
-          </p>
+
+        <!-- Slide 2: Super Speedway (Dinoco 400) -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-racing-red transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-racing-darkred via-red-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #dc2626 10%, #450a0a 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🏆</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-racing-red uppercase border border-racing-red/30">
+                  Circuito Dinoco 400
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  Óvalo 2.5 mi
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-racing-red transition-colors flex items-center justify-between">
+                  <span>Super Speedway</span>
+                  <span class="text-xs text-racing-red font-normal">Copa Pistón</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  El óvalo de alta velocidad donde Rayo McQueen empató en la última vuelta por la gloria de la Copa Pistón desafiando a Chick Hicks y a El Rey.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">⚡ 350+ km/h</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🏁 Triple Empate</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-racing-red italic">
+                “¡Vuelta decisiva! Dos neumáticos nuevos, acelerador a fondo y la Copa Pistón en juego.”
+              </p>
+            </div>
+          </div>
         </div>
+
+        <!-- Slide 3: Willy's Butte (Curva de Doc Hudson) -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-dinoco-blue transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-sky-900 via-blue-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #0284c7 10%, #082f49 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🌪️</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-dinoco-blue uppercase border border-dinoco-blue/30">
+                  Willy's Butte
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  Cañón Sur
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-dinoco-blue transition-colors flex items-center justify-between">
+                  <span>Curva de Doc</span>
+                  <span class="text-xs text-dinoco-blue font-normal">Derrape en Tierra</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  La curva de tierra suelta al borde del barranco donde McQueen dominó el contravolante del Fabuloso Hudson Hornet para salir despedido hacia adelante.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">⏳ Derrape Puro</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">💙 Hornet #51</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-dinoco-blue italic">
+                “Gira a la derecha para ir a la izquierda... confía en la física del contravolante.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Los Angeles International Speedway -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-highway-yellow transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-yellow-700 via-amber-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #eab308 10%, #78350f 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🏎️</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-highway-yellow uppercase border border-highway-yellow/30">
+                  Desempate 2006
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  California
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-highway-yellow transition-colors flex items-center justify-between">
+                  <span>L.A. Speedway</span>
+                  <span class="text-xs text-highway-yellow font-normal">200k Fanáticos</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  El coliseo repleto donde McQueen frenó a metros de coronarse para empujar a Strip "El Rey" Weathers y permitirle cruzar la meta con honor y dignidad.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🏅 Espíritu Deportivo</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">👑 El Rey Weathers</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-highway-yellow italic">
+                “Es solo una copa vacía... pero el honor y el respeto en la pista duran para siempre.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Circuito Urbano de Tokio (World Grand Prix) -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-radiator-neon transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-cyan-900 via-indigo-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #06b6d4 10%, #1e1b4b 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🗼</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-radiator-neon uppercase border border-radiator-neon/30">
+                  World Grand Prix
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  Japón • Noche
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-radiator-neon transition-colors flex items-center justify-between">
+                  <span>Circuito de Tokio</span>
+                  <span class="text-xs text-radiator-neon font-normal">Neón Urbano</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  Rascacielos futuristas, curvas callejeras mojadas por la lluvia y pantallas luminosas donde McQueen y Francesco Bernoulli llevaron la rivalidad al límite.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🌧️ Asfalto Mojado</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">💡 Luces Neón</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-radiator-neon italic">
+                “Reflejos de neón sobre el suelo mojado a máxima potencia en la noche nipona.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 6: Thomasville Speedway & Pista de Smokey -->
+        <div class="circuit-slide w-full md:w-1/2 lg:w-1/3 flex-none p-3">
+          <div class="h-full group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div class="h-48 bg-gradient-to-br from-emerald-900 via-stone-900 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #10b981 10%, #1c1917 70%);"></div>
+                <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🌲</span>
+                <div class="absolute top-3 left-3 bg-asphalt/85 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-emerald-400 uppercase border border-emerald-500/30">
+                  Cuna de Leyendas
+                </div>
+                <div class="absolute top-3 right-3 bg-asphalt/85 backdrop-blur px-2 py-0.5 rounded text-[10px] text-gray-300 font-mono">
+                  Georgia 1951
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-racing text-lg text-white group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+                  <span>Thomasville</span>
+                  <span class="text-xs text-emerald-400 font-normal">Garaje de Smokey</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                  El circuito rústico oculto entre pinares donde Smokey afinó el motor del fabuloso Hudson Hornet para ganar tres Copas Pistón históricas.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🕰️ Época Dorada</span>
+                  <span class="px-2 py-0.5 bg-asphalt-dark text-gray-300 text-[10px] rounded-md border border-gray-800">🔧 Clásico V8</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 pb-5 pt-2 border-t border-gray-800/80">
+              <p class="text-[11px] text-emerald-400 italic">
+                “Sin computadoras ni telemetría: solo instinto de piloto, motor y corazón de campeón.”
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Card 2: Pista de Dinoco 400 -->
-      <div class="group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-racing-red transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-racing-darkred via-red-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
-          <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #dc2626 10%, #450a0a 70%);"></div>
-          <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🏆</span>
-          <div class="absolute top-3 left-3 bg-asphalt/80 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-racing-red uppercase border border-racing-red/30">Circuito Dinoco 400</div>
-        </div>
-        <div class="p-5">
-          <h3 class="font-racing text-lg text-white group-hover:text-racing-red transition-colors">Super Speedway</h3>
-          <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-            El óvalo de alta velocidad donde Rayo McQueen empató en la última vuelta por la gloria de la Copa Pistón.
-          </p>
-        </div>
+      <!-- Botones flotantes laterales -->
+      <button id="btnCircuitFloatPrev" type="button" aria-label="Postal anterior" class="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-11 h-11 items-center justify-center rounded-full bg-asphalt/90 backdrop-blur border border-highway-yellow/40 text-highway-yellow hover:bg-highway-yellow hover:text-asphalt transition-all duration-200 shadow-neon-yellow">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <button id="btnCircuitFloatNext" type="button" aria-label="Siguiente postal" class="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-11 h-11 items-center justify-center rounded-full bg-asphalt/90 backdrop-blur border border-racing-red/40 text-racing-red hover:bg-racing-red hover:text-white transition-all duration-200 shadow-neon-red">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Indicadores / Dots de navegación y consejos interactivos -->
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div id="circuitDotsContainer" class="flex items-center gap-2">
+        <!-- Generados dinámicamente -->
       </div>
 
-      <!-- Card 3: La Pista de Tierra de Doc -->
-      <div class="group relative rounded-2xl overflow-hidden border border-gray-800 bg-asphalt shadow-xl hover:border-dinoco-blue transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-sky-900 via-blue-950 to-asphalt-dark flex items-center justify-center relative overflow-hidden">
-          <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 opacity-60" style="background-image: radial-gradient(circle, #0284c7 10%, #082f49 70%);"></div>
-          <span class="text-6xl group-hover:scale-125 transition-transform duration-300">🌪️</span>
-          <div class="absolute top-3 left-3 bg-asphalt/80 backdrop-blur px-2.5 py-1 rounded-md text-[10px] font-racing text-dinoco-blue uppercase border border-dinoco-blue/30">Willy's Butte</div>
-        </div>
-        <div class="p-5">
-          <h3 class="font-racing text-lg text-white group-hover:text-dinoco-blue transition-colors">Curva de Tierra de Doc</h3>
-          <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-            Donde McQueen aprendió el derrape en tierra: <em>"Gira a la derecha para ir a la izquierda"</em>.
-          </p>
-        </div>
+      <div class="text-xs text-gray-500 flex items-center gap-2 font-mono">
+        <span class="inline-block w-2 h-2 rounded-full bg-highway-yellow animate-ping"></span>
+        <span>Arrastra con el ratón o usa las flechas ◄ ► para recorrer la pista</span>
       </div>
-
     </div>
   </section>
 
@@ -400,13 +642,14 @@
       <div class="flex items-center gap-6 text-xs font-racing uppercase tracking-wider">
         <a href="#garaje-section" class="hover:text-highway-yellow transition-colors">Parrilla</a>
         <a href="#garaje-section" class="hover:text-highway-yellow transition-colors">Fichas Técnicas</a>
+        <a href="#circuitos-section" class="hover:text-highway-yellow transition-colors">Circuitos</a>
         <a href="/api/productos" target="_blank" class="hover:text-highway-yellow transition-colors">API REST</a>
         <a href="/api/database/status" target="_blank" class="hover:text-highway-yellow transition-colors">Status BD</a>
       </div>
 
       <div class="text-xs text-gray-500 text-center md:text-right">
         <p>© 2026 Copa Pistón Racing League.</p>
-        <p class="text-highway-yellow font-racing mt-0.5">"¡Ka-Chow!"</p>
+        <p class="text-highway-yellow font-racing mt-0.5">"¡ku-chau!"</p>
       </div>
 
     </div>

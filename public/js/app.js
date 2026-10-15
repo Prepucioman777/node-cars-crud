@@ -732,10 +732,279 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ========================================================
+// CONTROLADOR DEL CARRUSEL DE CIRCUITOS Y POSTALES (RUTA 66)
+// ========================================================
+function initCircuitsCarousel() {
+  const container = document.getElementById('circuitCarouselContainer');
+  const track = document.getElementById('circuitCarouselTrack');
+  const counter = document.getElementById('circuitCarouselCounter');
+  const btnPrev = document.getElementById('btnCircuitPrev');
+  const btnNext = document.getElementById('btnCircuitNext');
+  const btnFloatPrev = document.getElementById('btnCircuitFloatPrev');
+  const btnFloatNext = document.getElementById('btnCircuitFloatNext');
+  const btnPlayPause = document.getElementById('btnCircuitPlayPause');
+  const pauseIcon = document.getElementById('circuitPauseIcon');
+  const playIcon = document.getElementById('circuitPlayIcon');
+  const dotsContainer = document.getElementById('circuitDotsContainer');
+
+  if (!container || !track) return;
+
+  const slides = track.querySelectorAll('.circuit-slide');
+  const totalSlides = slides.length;
+  if (totalSlides === 0) return;
+
+  let currentIndex = 0;
+  let isPlaying = true;
+  let autoPlayTimer = null;
+  const autoPlayDelay = 4200;
+
+  function getItemsPerView() {
+    if (window.innerWidth >= 1024) return 3; // Desktop
+    if (window.innerWidth >= 768) return 2;  // Tablet
+    return 1;                                // Mobile
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, totalSlides - getItemsPerView());
+  }
+
+  function renderDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    const maxIndex = getMaxIndex();
+    const dotCount = maxIndex + 1;
+
+    for (let i = 0; i < dotCount; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = `circuit-dot ${i === currentIndex ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `Ir a posición ${i + 1}`);
+      dot.dataset.index = String(i);
+
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+        resetAutoPlay();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateCarousel(animate = true) {
+    const itemsPerView = getItemsPerView();
+    const maxIndex = getMaxIndex();
+
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    if (currentIndex < 0) currentIndex = 0;
+
+    const offsetPercent = currentIndex * (100 / itemsPerView);
+    track.style.transition = animate ? 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+    track.style.transform = `translateX(-${offsetPercent}%)`;
+
+    // Actualizar indicador numérico
+    if (counter) {
+      if (itemsPerView === 1) {
+        counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+      } else {
+        const end = Math.min(currentIndex + itemsPerView, totalSlides);
+        counter.textContent = `${String(currentIndex + 1).padStart(2, '0')}-${String(end).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+      }
+    }
+
+    // Actualizar puntos de navegación
+    if (dotsContainer) {
+      const dots = dotsContainer.querySelectorAll('.circuit-dot');
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  function nextSlide() {
+    const maxIndex = getMaxIndex();
+    if (currentIndex >= maxIndex) {
+      currentIndex = 0;
+    } else {
+      currentIndex++;
+    }
+    updateCarousel(true);
+  }
+
+  function prevSlide() {
+    const maxIndex = getMaxIndex();
+    if (currentIndex <= 0) {
+      currentIndex = maxIndex;
+    } else {
+      currentIndex--;
+    }
+    updateCarousel(true);
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoPlayTimer = setInterval(nextSlide, autoPlayDelay);
+    if (pauseIcon && playIcon) {
+      pauseIcon.classList.remove('hidden');
+      playIcon.classList.add('hidden');
+    }
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+    if (pauseIcon && playIcon) {
+      pauseIcon.classList.add('hidden');
+      playIcon.classList.remove('hidden');
+    }
+  }
+
+  function resetAutoPlay() {
+    if (isPlaying) {
+      startAutoPlay();
+    }
+  }
+
+  // Event Listeners de botones de navegación
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      nextSlide();
+      resetAutoPlay();
+    });
+  }
+
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      prevSlide();
+      resetAutoPlay();
+    });
+  }
+
+  if (btnFloatNext) {
+    btnFloatNext.addEventListener('click', () => {
+      nextSlide();
+      resetAutoPlay();
+    });
+  }
+
+  if (btnFloatPrev) {
+    btnFloatPrev.addEventListener('click', () => {
+      prevSlide();
+      resetAutoPlay();
+    });
+  }
+
+  if (btnPlayPause) {
+    btnPlayPause.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        startAutoPlay();
+        showToast('Carrusel en marcha automática 🏎️', 'info');
+      } else {
+        stopAutoPlay();
+        showToast('Carrusel en pausa ⏸️', 'info');
+      }
+    });
+  }
+
+  // Pausar al pasar el ratón por encima del contenedor
+  container.addEventListener('mouseenter', () => {
+    if (isPlaying && autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  });
+
+  container.addEventListener('mouseleave', () => {
+    if (isPlaying && !autoPlayTimer) {
+      startAutoPlay();
+    }
+  });
+
+  // Soporte para arrastre con Ratón y Gestos Táctiles (Swipe)
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  function handleTouchStart(e) {
+    isDragging = true;
+    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    currentX = startX;
+    track.classList.add('is-dragging');
+  }
+
+  function handleTouchMove(e) {
+    if (!isDragging) return;
+    currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  }
+
+  function handleTouchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    track.classList.remove('is-dragging');
+    const diffX = currentX - startX;
+
+    if (Math.abs(diffX) > 40) {
+      if (diffX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+      resetAutoPlay();
+    }
+  }
+
+  track.addEventListener('touchstart', handleTouchStart, { passive: true });
+  track.addEventListener('touchmove', handleTouchMove, { passive: true });
+  track.addEventListener('touchend', handleTouchEnd);
+
+  track.addEventListener('mousedown', handleTouchStart);
+  window.addEventListener('mousemove', handleTouchMove);
+  window.addEventListener('mouseup', handleTouchEnd);
+
+  // Navegación por teclado cuando la sección está visible
+  document.addEventListener('keydown', (e) => {
+    const rect = container.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!isVisible) return;
+
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      resetAutoPlay();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+      resetAutoPlay();
+    }
+  });
+
+  // Re-ajustar en cambio de resolución de pantalla
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      renderDots();
+      updateCarousel(false);
+    }, 150);
+  });
+
+  // Inicializar puntos y carrusel
+  renderDots();
+  updateCarousel(false);
+  startAutoPlay();
+}
+
 // Inicialización inmediata y garantizada al cargar la página
 function initApp() {
   checkDatabaseStatus();
   loadProducts();
+  initCircuitsCarousel();
   setInterval(checkDatabaseStatus, 15000);
 }
 
@@ -745,3 +1014,4 @@ if (document.readyState === 'loading') {
   // Si el navegador ya parseó el DOM (por estar al final del body)
   initApp();
 }
+
