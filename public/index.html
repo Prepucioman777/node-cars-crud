@@ -66,13 +66,20 @@
           <div class="flex items-center gap-2">
             <span class="font-racing text-2xl tracking-wider text-white group-hover:text-racing-red transition-colors">CARS</span>
             <span class="bg-gradient-to-r from-racing-red to-sunset-orange text-white text-xs font-racing px-2 py-0.5 rounded-sm transform -skew-x-6">RUST-EZE</span>
+            <span class="hidden lg:inline-flex bg-zinc-800 border border-zinc-700 text-highway-yellow text-[10px] font-racing px-2 py-0.5 rounded uppercase tracking-wider">
+              Container: web-cars-kills
+            </span>
           </div>
           <p class="text-xs text-highway-yellow tracking-widest font-semibold uppercase">Garaje Ruta 66 & Copa Pistón</p>
         </div>
       </a>
 
-      <!-- Estado de la Conexión Oracle & Botón Reconnect -->
+      <!-- Skill Tag & Estado de la Conexión Oracle -->
       <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-asphalt-light border border-zinc-700 text-xs font-racing text-zinc-300">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Skill: design-taste-frontend</span>
+        </div>
         <div id="dbStatusBadge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-yellow-500/40 bg-yellow-500/10 text-yellow-300 transition-all duration-300">
           <span id="dbStatusDot" class="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse"></span>
           <span id="dbStatusText">Sintonizando Pits...</span>
@@ -92,21 +99,26 @@
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       
-      <!-- Badge superior de la Ruta 66 -->
-      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-asphalt-light border border-highway-yellow/30 text-highway-yellow text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm">
-        <span>🏁</span> Radiator Springs, Condado Carburador • Milla 66
+      <!-- Badges superiores de la Ruta 66 y Skill -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 mb-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-asphalt-light border border-highway-yellow/30 text-highway-yellow text-xs font-semibold uppercase tracking-widest shadow-sm">
+          <span>🏁</span> Radiator Springs, Condado Carburador • Milla 66
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-racing-red/10 border border-racing-red/40 text-racing-red text-xs font-racing uppercase tracking-wider">
+          <span>✨</span> Taste-Skill Refined UI
+        </div>
       </div>
 
-      <!-- Título Impactante ku-chau! -->
-      <h1 class="font-racing text-4xl sm:text-6xl md:text-7xl tracking-wide uppercase italic text-transparent bg-clip-text bg-gradient-to-r from-white via-highway-yellow to-racing-red drop-shadow-md">
-        ¡Ku-Chau!
+      <!-- Título Impactante ku-chau! (Tipografía Sólida con Autoridad Editorial) -->
+      <h1 class="font-racing text-5xl sm:text-7xl md:text-8xl tracking-tight uppercase italic text-white drop-shadow-xl">
+        ¡Ku-Chau! <span class="text-racing-red">#95</span>
       </h1>
-      <p class="font-racing text-xl sm:text-2xl md:text-3xl text-gray-200 mt-2 uppercase tracking-wider">
-        Bienvenido al acelerador total
+      <p class="font-racing text-xl sm:text-2xl md:text-3xl text-highway-yellow mt-2 uppercase tracking-wider">
+        Acelerador Total · Garaje Piston Cup
       </p>
 
-      <p class="max-w-2xl mx-auto mt-4 text-gray-400 text-sm sm:text-base leading-relaxed">
-        Gestiona la parrilla de bólidos de la Copa Pistón y los clásicos de Radiator Springs. Modifica velocidades, afinaciones mecánicas y pon a punto los motores para la bandera a cuadros.
+      <p class="max-w-2xl mx-auto mt-4 text-gray-300 text-sm sm:text-base leading-relaxed">
+        Parrilla técnica de bólidos de la Copa Pistón y leyendas de Radiator Springs. Interfaz art-directed con estándares del ecosistema <span class="text-white font-semibold">taste-skill</span> para máxima claridad, velocidad y telemetría de carrera.
       </p>
 
       <!-- Botones de Acción Hero con Sonido Interactivo y Partículas -->
@@ -647,9 +659,12 @@
         <a href="/api/database/status" target="_blank" class="hover:text-highway-yellow transition-colors">Status BD</a>
       </div>
 
-      <div class="text-xs text-gray-500 text-center md:text-right">
-        <p>© 2026 Copa Pistón Racing League.</p>
-        <p class="text-highway-yellow font-racing mt-0.5">"¡ku-chau!"</p>
+      <div class="text-xs text-gray-400 text-center md:text-right">
+        <p>© 2026 Copa Pistón Racing League · <span class="text-highway-yellow font-racing">Container: web-cars-kills</span></p>
+        <p class="text-zinc-400 mt-1 flex items-center justify-center md:justify-end gap-1.5 font-mono text-[11px]">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Skill: <span class="text-white">Leonxlnx/taste-skill</span> (design-taste-frontend)
+        </p>
       </div>
 
     </div>
