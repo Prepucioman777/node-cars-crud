@@ -1,10 +1,10 @@
-# 🏎️ ¡Ka-Chow! Garaje de Radiator Springs & Copa Pistón (Gestor 67)
+# 🏎️ ¡Ku-Chau! Garaje de Radiator Springs & Copa Pistón (Gestor 67)
 
-Aplicación Web CRUD inspirada en la película **Cars (Pixar)**, el legendario circuito de la **Copa Pistón** y los clásicos de la **Ruta 66 en Radiator Springs**. Desarrollada con **NestJS**, **TypeScript**, **Tailwind CSS** y JavaScript interactivo con Web Audio API.
+Aplicación Web CRUD 
 
 ---
 
-## 🚀 Cómo Iniciar el Garaje en Local
+## Cómo Iniciar el Garaje en Local
 
 1. Abre tu terminal y accede al proyecto:
    ```bash
